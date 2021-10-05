@@ -68,6 +68,9 @@ modfd.close()
 ###########################################################################
 ####################### POST TO GITHUB ###################################
 
+# Create or update file contents
+#Creates a new file or replaces an existing file in a repository.
+#put /repos/{owner}/{repo}/contents/{path}
 
 
 
