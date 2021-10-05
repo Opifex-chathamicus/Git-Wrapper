@@ -8,12 +8,12 @@ Created on Tue Oct  5 02:29:58 2021
 import requests
 import base64
 
-tokenfd = open("/home/xcs/Documents/pythonprogramming/credtok.py",'r')
+tokenfd = open("/credtok.py",'r')
 TOKEN=tokenfd.readline().strip()
 tokenfd.close()
 print(TOKEN)
 API_URL="https://api.github.com"
-lsrepoprojurl="/repos/{owner}/{repo}/projects"
+#lsrepoprojurl="/repos/{owner}/{repo}/projects"
 teamurlrepo="/users/Opifex-chathamicus/repos"
 usrurlrepo="/users/alXCS/repos"
 usrurl="/users/alXCS"
