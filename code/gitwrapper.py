@@ -54,7 +54,8 @@ def get_file_contents(token,filename):
     return contentresp
 
 ###########################################################################
-####################### WRITE LOCALLY TO FILE #############################                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+####################### WRITE LOCALLY TO FILE #############################
+
 def write_to_file(token,headers,content,filename):
     modname=filename
     modfd=open("/home/xcs/Desktop/"+modname,'w')
@@ -68,6 +69,16 @@ def write_to_file(token,headers,content,filename):
 #Create or update file contents
 #Creates a new file or replaces an existing file in a repository.
 #put /repos/{owner}/{repo}/contents/{path}
+
+def store_to_file(token,filename,content):
+    headers={
+        "Authorization":"Basic "+token,
+        "Accept":"application/vnd.github.v3+json"
+    }
+    contentb64=base64.b64encode(content.encode("utf-8"))
+    data={"message":"Created "+filename,"content":contentb64}
+    r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/newfiletest.txt",data=data,headers=headers)
+    
 
 
 
