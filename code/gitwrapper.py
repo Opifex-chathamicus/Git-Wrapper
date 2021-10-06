@@ -76,7 +76,7 @@ def store_to_file(token,filename,content):
         "Accept":"application/vnd.github.v3+json"
     }
     contentb64=base64.b64encode(content.encode("utf-8"))
-    data={"message":"Created "+filename,"content":contentb64}
+    data={"message":"Created or edited "+filename,"content":contentb64}
     r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/newfiletest.txt",data=data,headers=headers)
     
 
