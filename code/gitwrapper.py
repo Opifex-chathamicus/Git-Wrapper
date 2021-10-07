@@ -20,7 +20,7 @@ def login():
     tokenfd.close()
     headers={
         "Authorization":"Basic "+token,
-        "Accept":"*/*"
+        "Accept":"application/vnd.github.v3+json"
         }
     return token,headers
     
@@ -42,21 +42,23 @@ def get_repo_contents(token,headers):
 ###########################################################################
 ####################### GET FILE CONTENTS #################################
 
-def get_file_contents(token,filename):
-    headers={
-            "Authorization":"Basic "+token,
-            "Accept":"application/vnd.github.v3+json"
-            }
-    r=requests.get(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/modules/"+filename,headers=headers)
+def get_file_contents(token,headers,path_filename):
+    path="/repos/Opifex-chathamicus/Konopzzzz/contents/"
+    r=requests.get(API_URL+path+path_filename,headers=headers)
     resp=r.json()
+    #print(headers)
+    #print(token)
+    #print(API_URL+path+path_filename)
+    #print(path_filename)
+    #print(resp)
     contentresp=resp['content']
     contentresp=base64.b64decode(contentresp)
-    contentresp=contentresp.decode("UTF-8") #the base64 decoded data has to be converted from bytes to string
-    return contentresp
+    contentresp=str(contentresp.decode("UTF-8")) #the base64 decoded data has to be converted from bytes to string
+    return resp,contentresp
 
 ###########################################################################
 ####################### WRITE LOCALLY TO FILE #############################                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-def write_to_file(token,headers,content,filename):
+def write_to_file(token,headers,filename,content):
     modname=filename
     modfd=open("/home/xcs/Desktop/"+modname,'w')
     modfd.write(content)
@@ -70,16 +72,13 @@ def write_to_file(token,headers,content,filename):
 #Creates a new file or replaces an existing file in a repository.
 #put /repos/{owner}/{repo}/contents/{path}
 
-def store_to_file(token,filename,content):
-    headers={
-        "Authorization":"token "+token,
-        "Accept":"application/vnd.github.v3+json"
-    }
+def store_to_file(token,headers,filename,content):
     contentb64unm=str(base64.b64encode(content.encode("utf-8"))) 
     contentb64=contentb64unm.strip('b').strip("'") 
     data={"message":"Created newfiletest.txt","content":contentb64}
     datajson=json.dumps(data)
-    r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/"+filename,data=datajson,headers=headers)
-    return r4
+    r=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/"+filename,data=datajson,headers=headers)
+    resp=r.json()
+    return resp
 
 
