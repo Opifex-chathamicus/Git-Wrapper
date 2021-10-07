@@ -24,7 +24,7 @@ def login():
     return token,headers
     
 #####################################################################
-####################### GET REPO CONTENTS #############################
+#######################GET REPO CONTENTS #############################
 
 def get_repo_contents(token,headers):
     r=requests.get(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/modules/",headers=headers)
@@ -54,16 +54,6 @@ def get_file_contents(token,filename):
     return contentresp
 
 ###########################################################################
-####################### WRITE LOCALLY TO FILE #############################
-
-def write_to_file(token,headers,content,filename):
-    modname=filename
-    modfd=open("/home/xcs/Desktop/"+modname,'w')
-    modfd.write(content)
-    modfd.close()
-
-
-###########################################################################
 ####################### POST TO GITHUB ###################################
 
 #Create or update file contents
@@ -72,14 +62,14 @@ def write_to_file(token,headers,content,filename):
 
 def store_to_file(token,filename,content):
     headers={
-        "Authorization":"Basic "+token,
+        "Authorization":"token "+token,
         "Accept":"application/vnd.github.v3+json"
     }
-    contentb64=base64.b64encode(content.encode("utf-8"))
-    data={"message":"Created "+filename,"content":contentb64}
-    r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/newfiletest.txt",data=data,headers=headers)
+    contentb64unm=str(base64.b64encode(content.encode("utf-8"))) 
+    contentb64=contentb64unm.strip('b').strip("'") 
+    data={"message":"Created newfiletest.txt","content":contentb64}
+    datajson=json.dumps(data)
+    r=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/"+filename,data=datajson,headers=headers)
     
-
-
 
 
