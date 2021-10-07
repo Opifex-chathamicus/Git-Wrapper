@@ -8,6 +8,7 @@ Created on Wed Oct  6 00:19:10 2021
 
 import requests
 import base64
+import json
 
 
 API_URL="https://api.github.com"
@@ -54,6 +55,15 @@ def get_file_contents(token,filename):
     return contentresp
 
 ###########################################################################
+####################### WRITE LOCALLY TO FILE #############################                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+def write_to_file(token,headers,content,filename):
+    modname=filename
+    modfd=open("/home/xcs/Desktop/"+modname,'w')
+    modfd.write(content)
+    modfd.close()
+
+
+###########################################################################
 ####################### POST TO GITHUB ###################################
 
 #Create or update file contents
@@ -65,17 +75,11 @@ def store_to_file(token,filename,content):
         "Authorization":"token "+token,
         "Accept":"application/vnd.github.v3+json"
     }
-<<<<<<< HEAD
     contentb64unm=str(base64.b64encode(content.encode("utf-8"))) 
     contentb64=contentb64unm.strip('b').strip("'") 
     data={"message":"Created newfiletest.txt","content":contentb64}
     datajson=json.dumps(data)
-    r=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/"+filename,data=datajson,headers=headers)
-=======
-    contentb64=base64.b64encode(content.encode("utf-8"))
-    data={"message":"Created or edited "+filename,"content":contentb64}
-    r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/newfiletest.txt",data=data,headers=headers)
->>>>>>> 6884b1976357df2cd56c42dd12df37c64131f190
-    
+    r4=requests.put(API_URL+"/repos/Opifex-chathamicus/Konopzzzz/contents/data/"+filename,data=datajson,headers=headers)
+    return r4
 
 
