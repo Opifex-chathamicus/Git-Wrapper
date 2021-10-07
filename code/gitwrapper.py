@@ -46,11 +46,6 @@ def get_file_contents(token,headers,path_filename):
     path="/repos/Opifex-chathamicus/Konopzzzz/contents/"
     r=requests.get(API_URL+path+path_filename,headers=headers)
     resp=r.json()
-    #print(headers)
-    #print(token)
-    #print(API_URL+path+path_filename)
-    #print(path_filename)
-    #print(resp)
     contentresp=resp['content']
     contentresp=base64.b64decode(contentresp)
     contentresp=str(contentresp.decode("UTF-8")) #the base64 decoded data has to be converted from bytes to string
